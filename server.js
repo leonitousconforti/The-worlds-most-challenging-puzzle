@@ -1,34 +1,58 @@
+const fs = require("fs");
 const url = require("url");
 const http = require("http");
+const request = require("request");
 const debug = require("debug")("Maze:server");
 
 const port = 8080;
+const validEndpoints = ["/prologue", "/room0", "/room1", "/room2", "/room3", "/room4", "/room5", "/room6", "/room7", 
+                      "/room8", "/room9", "/room10", "/room11", "/room12", "/room13", "/room14", "/room15", "/room16", "/room17", 
+                      "/room18", "/room19", "/room20", "/room21", "/room22", "/room23", "/room24", "/room25", "/room26", "/room27", 
+                      "/room28", "/room29", "/room30", "/room31", "/room32", "/room33", "/room34", "/room35", "/room36", "/room37", 
+                      "/room38", "/room39", "/room40", "/room41", "/room42", "/room43", "/room44", "/room45", "/"
+                    ];
 let server;
-let validEndpoints = ["/prologue", "/room1", "/room2", "/"];
 
 /**
  * Defines the http server that hosts the files for the web
  * 
  * @param {function} gameHandler the handler function that provides the logic of what to do with the request
+ * @param {function} gameRender the handler function that renders each of the html pages
  */
-function init(gameHandler) {
+function init(gameHandler, gameRender) {
     server = http.createServer(function(request, response) {
 
         // Maybe do some other authentication here to make sure people don't cheat?
         // Look for and set cookies...
         let parsedUrl = url.parse(request.url, true);
+        
+        // If the url just has a '/room#' pathname, then render the scence
         if (
+            (validEndpoints.indexOf(parsedUrl.pathname) > -1) && 
+            (parsedUrl.query.fromRoom == null) &&
+            (parsedUrl.query.doorSelection == null)
+        ) {
+            // Get the room number from the url
+            let roomFromUrl = parsedUrl.pathname.split("m")[1];
+
+            // Render the scene
+            gameRender(roomFromUrl, request, response);
+        } 
+        // Otherwise, if the request is because the player has made a request:
+        // handle the request first with the maze decision tree and then render the next page
+        else if (
             (validEndpoints.indexOf(parsedUrl.pathname) > -1) && 
             (parsedUrl.query.fromRoom != null) &&
             (parsedUrl.query.doorSelection != null)
         ) {
-            // console.log(parsedUrl);
             let fromRoom = parsedUrl.query.fromRoom;
             let doorSelection = parsedUrl.query.doorSelection;
 
             debug('user connected from room: %s, door selection: %s', fromRoom, doorSelection);
             gameHandler(fromRoom, doorSelection, request, response);
-        } else {
+        } 
+        // OtherOtherWise, the player tried to do something they were not supposed to do!
+        else {
             debug('user: %s tried to hit: %s - not a valid game URL access was denied', request.connection.remoteAddress, request.url);
             denyAccess(request, response);
         }
@@ -81,7 +105,8 @@ function generateHTMLforRoom(roomNumber, roomText, roomImage) {
                 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
             <![endif]-->
 
-
+            <p>You are in room: ${roomNumber}</p>
+            <img src="data:image/png;base64, ${roomImage}" alt="" />
             
             <script src="" async defer></script>
         </body>
@@ -90,7 +115,47 @@ function generateHTMLforRoom(roomNumber, roomText, roomImage) {
     `;
 }
 
+function downloadALlImages() {
+    //http://www.intotheabyss.net/wp-content/uploads/2012/12/Room-07.jpg
+    let baseUri = "http://www.intotheabyss.net/wp-content/uploads/2012/12/";
+
+    for (let i = 1; i <= 45; i++) {
+        let url = baseUri;
+
+        if (i < 10) {
+            url = url + "0" + i + ".jpg";
+        } else {
+            url = url + i + ".jpg";
+        }
+
+        request.head(url, function(err, response, body) {
+            console.log('content-type:', response.headers['content-type']);
+            console.log('content-length:', response.headers['content-length']);
+
+            request(url).pipe(fs.createWriteStream("./rooms/roomImage-" + i + ".jpg"));
+        });
+    }
+}
+
+downloadALlImages();
+
 module.exports = {
     init,
-    generateHTMLforRoom
+    generateHTMLforRoom,
+    validEndpoints,
+    denyAccess
 };
+
+
+// var download = function(uri, filename, callback){
+//   request.head(uri, function(err, res, body){
+//     console.log('content-type:', res.headers['content-type']);
+//     console.log('content-length:', res.headers['content-length']);
+
+//     request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+//   });
+// };
+
+// download('https://www.google.com/images/srpr/logo3w.png', 'google.png', function(){
+//   console.log('done');
+// });
