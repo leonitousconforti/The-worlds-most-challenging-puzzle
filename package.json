@@ -1,0 +1,23 @@
+{
+  "name": "the-worlds-most-challenging-puzzle",
+  "version": "1.0.0",
+  "description": "solve Maze: the world's most challenging puzzle",
+  "main": "main.js",
+  "scripts": {
+    "test": "nodemon main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leonitousconforti/The-worlds-most-challenging-puzzle.git"
+  },
+  "author": "Leo Conforti",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leonitousconforti/The-worlds-most-challenging-puzzle/issues"
+  },
+  "homepage": "https://github.com/leonitousconforti/The-worlds-most-challenging-puzzle#readme",
+  "devDependencies": {
+    "debug": "^4.1.1",
+    "nodemon": "^2.0.2"
+  }
+}
