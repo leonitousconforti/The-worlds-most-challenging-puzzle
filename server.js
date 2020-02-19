@@ -4,7 +4,9 @@ const http = require("http");
 const request = require("request");
 const debug = require("debug")("Maze:server");
 
+// The port the server listens on, if on heroku or repl set to null (application has to bind to specific assigned port)
 const port = 8080;
+// All valid server endpoints the player is allowed to access
 const validEndpoints = ["/prologue", "/room0", "/room1", "/room2", "/room3", "/room4", "/room5", "/room6", "/room7", 
                       "/room8", "/room9", "/room10", "/room11", "/room12", "/room13", "/room14", "/room15", "/room16", "/room17", 
                       "/room18", "/room19", "/room20", "/room21", "/room22", "/room23", "/room24", "/room25", "/room26", "/room27", 
@@ -107,6 +109,7 @@ function generateHTMLforRoom(roomNumber, roomText, roomImage) {
 
             <p>You are in room: ${roomNumber}</p>
             <img src="data:image/png;base64, ${roomImage}" alt="" />
+            <p>${roomText}</p>
             
             <script src="" async defer></script>
         </body>

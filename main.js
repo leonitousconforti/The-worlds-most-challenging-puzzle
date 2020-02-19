@@ -36,8 +36,7 @@ async function gameRender(roomNum, request, response) {
 
     // grab all the files (text and images) that compose the room
 
-    let roomText = "";
-    //let roomText = await room.getRoomText(roomNum);
+    let roomText = await room.getRoomText(roomNum);
     let roomImage = await room.getRoomImage(roomNum);
     
     // Generate html that the browser can render form the next room's text and images
