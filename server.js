@@ -115,29 +115,34 @@ function generateHTMLforRoom(roomNumber, roomText, roomImage) {
     `;
 }
 
+/**
+ * Downloads all the images for the maze
+ */
 function downloadALlImages() {
     //http://www.intotheabyss.net/wp-content/uploads/2012/12/Room-07.jpg
-    let baseUri = "http://www.intotheabyss.net/wp-content/uploads/2012/12/";
+    let baseUri = "http://www.intotheabyss.net/wp-content/uploads/2012/12/Room-";
 
+    // Loop 45 times to download all 45 images
     for (let i = 1; i <= 45; i++) {
         let url = baseUri;
 
+        // If the counter is less then 10, add a '0' before the number
         if (i < 10) {
             url = url + "0" + i + ".jpg";
         } else {
             url = url + i + ".jpg";
         }
 
+        // Send a http head request
         request.head(url, function(err, response, body) {
             console.log('content-type:', response.headers['content-type']);
             console.log('content-length:', response.headers['content-length']);
 
+            // Download the image and send the binary response to a file
             request(url).pipe(fs.createWriteStream("./rooms/roomImage-" + i + ".jpg"));
         });
     }
 }
-
-downloadALlImages();
 
 module.exports = {
     init,
@@ -145,17 +150,3 @@ module.exports = {
     validEndpoints,
     denyAccess
 };
-
-
-// var download = function(uri, filename, callback){
-//   request.head(uri, function(err, res, body){
-//     console.log('content-type:', res.headers['content-type']);
-//     console.log('content-length:', res.headers['content-length']);
-
-//     request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
-//   });
-// };
-
-// download('https://www.google.com/images/srpr/logo3w.png', 'google.png', function(){
-//   console.log('done');
-// });

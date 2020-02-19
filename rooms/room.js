@@ -46,17 +46,17 @@ module.exports.newRoom = function(_location, _doors) {
  */
 module.exports.getRoomImage = function(location) {
     let fileOnDisk = path.join(__dirname, "roomImage-" + location.toString());
-    debug('fetching image file for room: %s, from file: %s.png', location, fileOnDisk.toString());
+    debug('fetching image file for room: %s, from file: %s.jpg', location, fileOnDisk.toString());
 
     // Return a promise to wait for the data from the file
     return new Promise(function(resolve, reject) {
-        fs.readFile(fileOnDisk + ".png", function(err, data) {
+        fs.readFile(fileOnDisk + ".jpg", function(err, data) {
             if (err) {
                 reject(err);
             }
 
             // Convert binary data to base64 encoded string
-            let base64 = new Buffer(data).toString('base64');
+            let base64 = new Buffer.from(data).toString('base64');
             resolve(base64);
         });
     });
