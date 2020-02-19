@@ -4,7 +4,7 @@
   "description": "solve Maze: the world's most challenging puzzle",
   "main": "main.js",
   "scripts": {
-    "test": "nodemon main.js"
+    "test": "DEBUG=Maze:* nodemon main.js"
   },
   "repository": {
     "type": "git",

@@ -1,5 +1,5 @@
-const room = require('./rooms/room.js');
-const debug = require('debug')('Maze:maze');
+const room = require("./rooms/room.js");
+const debug = require("debug")("Maze:maze");
 
 /**
  * Defines the structure of the Maze: which rooms and where and what doors can 
@@ -7,6 +7,7 @@ const debug = require('debug')('Maze:maze');
  */
 module.exports.mazeLookup = {
     "prologue": room.newRoom(   0,   [1]                ),
+    "0":        room.newRoom(   0,   [1]                ),
     "1":        room.newRoom(   1,   [20, 26, 41, 21]   ),
     "2":        room.newRoom(   2,   [29, 22, 12]       ),
     "3":        room.newRoom(   3,   [1]                ),

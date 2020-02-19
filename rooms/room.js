@@ -6,7 +6,7 @@ const debug = require("debug")("Maze:room");
  * Defines the properties if a 'room' in the maze.
  */
 module.exports.newRoom = function(_location, _doors) {
-    debug('making new room @ location: %s, with doors to %o', _location, _doors);
+    debug('making new room at position: %s, with doors to %o', _location, _doors);
 
     let location = _location;
     let doors = _doors;
@@ -32,7 +32,8 @@ module.exports.newRoom = function(_location, _doors) {
         location,
         doors,
         getRoomImage,
-        getRoomText
+        getRoomText,
+        getNewRoomFromOption
     };
 }
 
@@ -42,8 +43,8 @@ module.exports.newRoom = function(_location, _doors) {
  * @return Promise that resolves with the image in Base64
  */
 module.exports.getRoomImage = function(location) {
-    let fileOnDisk = path.join(__dirname, "roomImage-", location);
-    debug('fetching image file for room: %s, from file: %s', location, fileOnDisk.toString());
+    let fileOnDisk = path.join(__dirname, "roomImage-" + location.toString());
+    debug('fetching image file for room: %s, from file: %s.png', location, fileOnDisk.toString());
 
     return new Promise(function(resolve, reject) {
         fs.readFile(fileOnDisk + ".png", function(err, data) {
@@ -62,14 +63,16 @@ module.exports.getRoomImage = function(location) {
  * @return Promise that resolves with the text
  */
 module.exports.getRoomText = function(location) {
-    let fileOnDisk = path.join(__dirname, "roomText-", location);
-    debug('fetching text file for room: %s, from file: %s', location, fileOnDisk.toString());
+    let fileOnDisk = path.join(__dirname, "roomText-" + location.toString());
+    debug('fetching text file for room: %s, from file: %s.txt', location, fileOnDisk.toString());
 
     return new Promise(function(resolve, reject) {
-        if (err) {
-            reject(err);
-        }
+        fs.readFile(fileOnDisk + ".txt", function(err, data) {
+            if (err) {
+                reject(err);
+            }
 
-        resolve(data);
+            resolve(data);
+        });
     });
 }
