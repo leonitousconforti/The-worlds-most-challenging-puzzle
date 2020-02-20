@@ -421,9 +421,9 @@ function generateHTMLforRoom(_roomNumber, _roomText, _roomImage, _doors) {
     
         <div class="signature">
             <p>Made with <i class="much-heart"></i> by Leo Conforti</p>
-            <p>All images subject to copyright</p>
+            <p>Images and text copyright 1985 by Christopher Manson</p>
         </div>
-    
+        
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script async defer>
             $("document").ready(function () {
