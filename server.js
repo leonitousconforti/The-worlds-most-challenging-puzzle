@@ -36,9 +36,16 @@ function init(gameHandler, gameRender) {
         ) {
             // Get the room number from the url
             let roomFromUrl = parsedUrl.pathname.split("m")[1];
+            if (parsedUrl.pathname == "/prologue") {
+                roomFromUrl = 0;
+            }
 
-            // Render the scene
-            gameRender(roomFromUrl, request, response);
+            if (roomFromUrl == null) {
+                response.writeHead(302, {'Location': 'http://localhost:8080/prologue'});
+            } else {
+                // Render the scene
+                gameRender(roomFromUrl, request, response);
+            }
         } 
         // Otherwise, if the request is because the player has made a request:
         // handle the request first with the maze decision tree and then render the next page
