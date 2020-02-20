@@ -53,11 +53,11 @@ module.exports.getRoomImage = function(location) {
         fs.readFile(fileOnDisk + ".jpg", function(err, data) {
             if (err) {
                 reject(err);
+            } else {
+                // Convert binary data to base64 encoded string
+                let base64 = new Buffer.from(data).toString('base64');
+                resolve(base64);
             }
-
-            // Convert binary data to base64 encoded string
-            let base64 = new Buffer.from(data).toString('base64');
-            resolve(base64);
         });
     });
 }
