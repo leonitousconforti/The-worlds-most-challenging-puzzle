@@ -42,6 +42,7 @@ function init(gameHandler, gameRender) {
 
             if (roomFromUrl == null) {
                 response.writeHead(302, {'Location': 'http://localhost:8080/prologue'});
+                response.end();
             } else {
                 // Render the scene
                 gameRender(roomFromUrl, request, response);
