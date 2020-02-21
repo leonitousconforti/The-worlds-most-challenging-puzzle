@@ -12,7 +12,7 @@
 	<title>The Maze</title>
 	<meta name="description" content="" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<!-- <link rel="stylesheet" href=""> -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
 	<style>
 		/* styleSheet */
@@ -25,7 +25,23 @@
         You are using an <strong>outdated</strong> browser. Please
         <a href="#">upgrade your browser</a> to improve your experience.
       </p>
-    <![endif]-->
+	<![endif]-->
+	
+	<div class="alert">
+		<h1>Introduction</h1>
+		<h2 style="padding-top:10px;color:#000; font-size: medium;">
+			I invite you to enter my Maze. I say it is mine, because despite who else I might be, I am the architect as well as your guide. Your first goal is to find the shortest route through the Maze – a simple task, I assure you, if you know what to look for. I have planted clues throughout for your interpretation – or misinterpretation.  Indeed, you will be fascinated by the Maze’s ambiguity, stimulated by its mystery, stymied by its riddle. But fear not! I will be with you all the way. Fear not, that is, if you truly believe that my clues or I can be trusted.
+			Enter room 1.  Which door should you take from here? Someone in the narrative uses the word “story,” and the same word appears above the door to room 20. Is that the connection? Is there a connection?  Give it a try and go to room 20, which is peculiar in its own way. Just inside the door to room 27 you see what looks like the bottom half of an archer’s arrow – an arrow pointing the way perhaps? I will not tell. Perhaps it wouldn’t help if I did. It is up to you to decide, as you move from room to room, hoping that fact is not fiction and that your best judgment has not led you astray.
+			Tempted? Test your wits against mine. I guarantee that my Maze will challenge you to think in ways you’ve never thought before. But beware…one wrong turn and you may never escape.
+		
+			Your challenge is to find your way from room 1 (after the Prologue) to room 45 and then back to room 1 using the shortest possible path. If you use your head, you should be able to make the journey in only sixteen steps.
+			There are any number of clues in the drawings and in the story to help you choose the right door in each room. Clues in a series of rooms may relate to each one another, and may indicate a path. Other clues may refer to a specific door in a single room.
+			Anything might be a clue.
+			Not all clues are necessarily trustworthy.
+			Once you’ve found the shortest path in and out of the Maze, challenge yourself further. Go back and find the riddle hidden in room 45. The answer to that riddle is concealed somewhere on the shortest path.
+		</h2>
+		<a class="close_btn"><i class="fa fa-2x fa-times"></i></a>
+	</div>
 
 	<div class="container">
 		<div class="tab-slider--nav">
@@ -39,10 +55,11 @@
 			</ul>
 		</div>
 		<div class="tab-slider--container">
-			<div id="mazeRoomTab" class="tab-slider--body">
-				<h2 style="visibility:hidden">.</h2>
+			<div id="mazeRoomTab" class="tab-slider--body mazeRoomTab">
+				<!-- <h2>.</h2> -->
 
-				<img src="data:image/png;base64, /* roomImage */" alt="" />
+				<img style="padding: 20px 20px;" src="data:image/png;base64, /* roomImage */" alt="" />
+				<h2 class="mazeRoomTabText">/* roomText */</h2>
 			</div>
 			<div id="roomSelectionTab" class="tab-slider--body">
 				<h2 style="visibility:hidden">.</h2>
@@ -60,15 +77,29 @@
 	</div>
 
 	<div class="signature">
-		<p>Made with <i class="much-heart"></i> by Leo Conforti</p>
+		<p>Made with <i class="much-heart"></i></p>
 		<p>Images and text copyright 1985 by Christopher Manson</p>
 	</div>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script async defer>
+		let currentRoom = /* roomNumber */;
+
 		$("document").ready(function () {
 			$(".tab-slider--body").hide();
 			$(".tab-slider--body:first").show();
+			
+			if (currentRoom != 0) {
+				$('.alert').hide();
+			} else if ($(window).width() > 786) {
+				$('.alert').css("visibility", "visible");
+				$('.alert').hide().delay(750).slideDown(400);
+			};
+
+			$('.close_btn').click(function() {
+				$('.close_btn').fadeOut(200);
+				$('.alert').slideUp(400);
+			});
 		});
 
 		$(".tab-slider--nav li").click(function () {
@@ -84,7 +115,6 @@
 			$(this).addClass("active");
 		});
 
-		let currentRoom = /* roomNumber */;
 		let doors = [ /* doors */ ];
 		let choice = null;
 		let elm = document.getElementById("doorRadioButtons");
