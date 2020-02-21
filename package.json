@@ -2,9 +2,15 @@
   "name": "the-worlds-most-challenging-puzzle",
   "version": "1.0.0",
   "description": "solve Maze: the world's most challenging puzzle",
-  "main": "main.js",
+  "main": "./lib/main.js",
   "scripts": {
-    "test": "DEBUG=Maze:* nodemon main.js"
+    "start": "node ./lib/main.js",
+    "debug": "DEBUG=Maze:* nodemon ./lib/main.js",
+    "watch": "npm run jshint && npm run debug",
+    "jshint": "jshint ./lib ./tests",
+    "test-spec": "tap tests/*_spec.js -R spec",
+    "test-perf": "node tests/performance.js",
+    "beautify": "js-beautify --end-with-newline --replace ./lib/*.js ./tests/*.js"
   },
   "repository": {
     "type": "git",
@@ -17,8 +23,13 @@
   },
   "homepage": "https://github.com/leonitousconforti/The-worlds-most-challenging-puzzle#readme",
   "devDependencies": {
-    "debug": "^4.1.1",
+    "js-beautify": "^1.10.3",
+    "jshint": "^2.11.0",
     "nodemon": "^2.0.2",
-    "request": "^2.88.2"
+    "tap": "^14.10.6"
+  },
+  "dependencies": {
+    "debug": "^4.1.1",
+    "lodash": "^4.17.15"
   }
 }

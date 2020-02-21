@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>The Maze</title>
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<!-- <link rel="stylesheet" href=""> -->
+
+	<style>
+		/* styleSheet */
+	</style>
+</head>
+
+<body>
+	<!--[if lt IE 7]>
+      <p class="browsehappy">
+        You are using an <strong>outdated</strong> browser. Please
+        <a href="#">upgrade your browser</a> to improve your experience.
+      </p>
+    <![endif]-->
+
+	<div class="container">
+		<div class="tab-slider--nav">
+			<ul class="tab-slider--tabs">
+				<li class="tab-slider--trigger active" rel="mazeRoomTab">
+					Room
+				</li>
+				<li class="tab-slider--trigger" rel="roomSelectionTab">
+					Choice
+				</li>
+			</ul>
+		</div>
+		<div class="tab-slider--container">
+			<div id="mazeRoomTab" class="tab-slider--body">
+				<h2 style="visibility:hidden">.</h2>
+
+				<img src="data:image/png;base64, /* roomImage */" alt="" />
+			</div>
+			<div id="roomSelectionTab" class="tab-slider--body">
+				<h2 style="visibility:hidden">.</h2>
+
+				<div class="buttonscontainer">
+					<h2>What door do you choose?</h2>
+
+					<ul class="buttons-ul" id="doorRadioButtons"></ul>
+					<button class="continueButton continueButtonInactive" id="continueButton" onclick="continueGame()">
+						Continue!
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="signature">
+		<p>Made with <i class="much-heart"></i> by Leo Conforti</p>
+		<p>Images and text copyright 1985 by Christopher Manson</p>
+	</div>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script async defer>
+		$("document").ready(function () {
+			$(".tab-slider--body").hide();
+			$(".tab-slider--body:first").show();
+		});
+
+		$(".tab-slider--nav li").click(function () {
+			$(".tab-slider--body").hide();
+			var activeTab = $(this).attr("rel");
+			$("#" + activeTab).fadeIn();
+			if ($(this).attr("rel") == "roomSelectionTab") {
+				$(".tab-slider--tabs").addClass("slide");
+			} else {
+				$(".tab-slider--tabs").removeClass("slide");
+			}
+			$(".tab-slider--nav li").removeClass("active");
+			$(this).addClass("active");
+		});
+
+		let currentRoom = /* roomNumber */;
+		let doors = [ /* doors */ ];
+		let choice = null;
+		let elm = document.getElementById("doorRadioButtons");
+		let html =
+			'<li class="buttons-il"><input type="radio" id="f-option" name="selector" onclick="updateDoor(1)"/><label for="f-option">' +
+			'Door 1 - Brings you to room #' + doors[0] + '</label><div class="check"></div></li>';
+		elm.innerHTML += html;
+
+		for (let i = 1; i < doors.length; i++) {
+			let idd = parseInt(i) + "-option";
+
+			let html = '<li class="buttons-il"><input type="radio" id=' + idd + ' name="selector" onclick="updateDoor(' + (i +
+				1) + ')"/><label for=' + idd + '>Door ' + (i + 1) + ' - Brings you to room #' + doors[i] +
+				'</label><div class="check"><div class="inside"></div></div></li>';
+			elm.innerHTML += html;
+		}
+
+		function updateDoor(num) {
+			$(".continueButton").addClass("continueButtonInactive");
+			$(".continueButton").addClass("continueButtonActive");
+			choice = num;
+		}
+
+		function continueGame() {
+			if (choice != null) {
+				console.log("here");
+
+				// Helps prevent cheating because this way disables the back button!
+				window.location.replace("./room" + currentRoom + "?fromRoom=" + currentRoom + "&doorSelection=" + choice);
+			}
+		}
+	</script>
+</body>
+
+</html>
