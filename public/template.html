@@ -56,7 +56,7 @@
 			<div id="mazeRoomTab" class="tab-slider--body mazeRoomTab">
 				<!-- <h2>.</h2> -->
 
-				<img style="padding: 20px 20px;" src="data:image/png;base64, /* roomImage */" alt="" />
+				<img style="padding: 20px 20px;" src="data:image/png;base64, /* roomImage */" alt="" onclick="revealSpeacialRoom()"/>
 				<h2 class="mazeRoomTabText">/* roomText */</h2>
 			</div>
 			<div id="roomSelectionTab" class="tab-slider--body">
@@ -123,8 +123,13 @@
 
 		for (let i = 1; i < doors.length; i++) {
 			let idd = parseInt(i) + "-option";
+			let vis = "visible";
 
-			let html = '<li class="buttons-il"><input type="radio" id=' + idd + ' name="selector" onclick="updateDoor(' + (i +
+			if ((currentRoom == 29) && (i == doors.length - 1)) {
+				vis = "hidden";
+			}
+
+			let html = '<li class="buttons-il" style="visibility: ' + vis + '" id=' + (idd + "2") + '><input type="radio" id=' + idd + ' name="selector" onclick="updateDoor(' + (i +
 				1) + ')"/><label for=' + idd + '>Door ' + (i + 1) + ' - Brings you to room #' + doors[i] +
 				'</label><div class="check"><div class="inside"></div></div></li>';
 			elm.innerHTML += html;
@@ -142,6 +147,12 @@
 
 				// Helps prevent cheating because this way disables the back button!
 				window.location.replace("./room" + currentRoom + "?fromRoom=" + currentRoom + "&doorSelection=" + choice);
+			}
+		}
+
+		function revealSpeacialRoom() {
+			if (currentRoom == 29) {
+				$("#" + (doors.length - 1) + "-option2").css("visibility", "visible");
 			}
 		}
 	</script>
