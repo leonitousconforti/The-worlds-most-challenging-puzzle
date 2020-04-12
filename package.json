@@ -8,8 +8,7 @@
     "debug": "DEBUG=Maze:* nodemon ./lib/main.js",
     "watch": "npm run jshint && npm run debug",
     "jshint": "jshint ./lib ./tests",
-    "test-spec": "tap tests/*_spec.js -R spec",
-    "test-perf": "node tests/performance.js",
+    "test": "tap tests/*_spec.js -R spec",
     "beautify": "js-beautify --end-with-newline --replace ./lib/*.js ./tests/*.js"
   },
   "repository": {
