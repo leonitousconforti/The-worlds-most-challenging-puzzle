@@ -4,7 +4,7 @@
   "description": "solve Maze: the world's most challenging puzzle",
   "main": "./lib/main.js",
   "scripts": {
-    "start": "node ./lib/main.js",
+    "start": "node app.js",
     "debug": "DEBUG=Maze:* nodemon ./lib/main.js",
     "watch": "npm run jshint && npm run debug",
     "jshint": "jshint ./lib ./tests",

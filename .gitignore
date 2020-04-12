@@ -2,3 +2,4 @@
 /lib/userDBpersistentStorage.json
 /.nyc_output/
 /.jshintrc
+/.DS_Store

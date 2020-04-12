@@ -1,15 +1,13 @@
-/* jshint esversion: 8 */
 const debug = require("debug")("Maze:main");
 
-const room = require("./room.js");
-const user = require("./user.js");
-const server = require("./server.js");
-const maze = require("./maze.js").mazeLookup;
-const choiceStatistics = require("./choiceCounting.js");
-const userDatabaseConnection = require("./userDatabaseConnection.js");
+const user = require("./lib/user.js");
+const server = require("./lib/server.js");
+const maze = require("./lib/maze.js").mazeLookup;
+const choiceStatistics = require("./lib/choiceCounting.js");
+const userDatabaseConnection = require("./lib/userDatabaseConnection.js");
 
 // Start fresh
-// userDatabaseConnection.erasePersistentStorage();
+userDatabaseConnection.erasePersistentStorage();
 
 // Defines what the game/maze should do for you after every action that you take.
 async function gameHandler(player, currentRoom, doorOption, request, response) {
@@ -72,4 +70,4 @@ async function gameRender(player, roomNum, request, response) {
 }
 
 // Starts serving the web files so we can play from a browser
-server.init(gameHandler, gameRender);
+server.init(gameHandler, gameRender, 8081);
