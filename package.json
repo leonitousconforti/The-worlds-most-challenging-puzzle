@@ -30,7 +30,7 @@
   "dependencies": {
     "cookies": "^0.8.0",
     "debug": "^4.1.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "uuid": "^3.4.0"
   }
 }
